@@ -12,6 +12,39 @@
 
 #include "BitcoinExchange.hpp"
 
+float valueAtDate(std::string inputLine)
+{
+	std::ifstream inputFile("ex00/data.csv");
+	if (inputFile.is_open())
+	{
+		std::string readedLine, lastLine, databaseLine;
+		int year, month, day;
+		float val;
+		char separator;
+
+		while(std::getline(inputFile, readedLine))
+		{
+			databaseLine = readedLine.substr(0, 10);
+			if (readedLine.compare("date,exchange_rate"))
+			{
+				if(inputLine.compare("2010-08-17") <= 0)
+					return 0;
+				else if (inputLine.compare(databaseLine) > 0)
+					lastLine = readedLine;
+				else if (inputLine.compare(databaseLine) == 0)
+				{
+					std::istringstream iss(readedLine);
+					if (iss >> year >> separator >> month >> separator >> day >> separator >> val)
+						return val;
+				}
+			}
+			else
+				lastLine = "2010-08-17";
+		}
+	}
+	return 0;
+}
+
 bool is_validFile(char** fileName, std::list<btc>* pricesList)
 {
 	std::ifstream inputFile(*fileName);
@@ -20,10 +53,13 @@ bool is_validFile(char** fileName, std::list<btc>* pricesList)
 		std::string readedLine;
 		while (std::getline(inputFile, readedLine))
 		{
-			btc newNode;
-			
-			newNode = validateDate(readedLine, newNode);
-			pricesList->push_back(newNode);
+			if (readedLine.compare("date | value"))
+			{
+				btc newNode;
+
+				newNode = validateDate(readedLine, newNode);
+				pricesList->push_back(newNode);
+			}
 		}
 		inputFile.close();
 		return true;
@@ -42,11 +78,26 @@ btc validateDate(std::string line, btc node)
 	float val;
 	char separator;
 
+	node.errorCode = 0;
 	if (iss >> year >> separator >> month >> separator >> day >> separator >> val)
+	{
 		if (!(year < 0 || month < 1 || month > 12 || day < 1 || day > 31))
 		{
 			node.date = line.substr(0, 10);
-			node.value = val;			
-		} 
+			if (val > 1000)
+				node.errorCode = -1; // value to large
+			else if (val < 0)
+				node.errorCode = -2; // value negative
+			else
+			{
+				node.value = val * valueAtDate(node.date);
+			}
+		}
+	}
+	else if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31)
+	{
+		node.date = line.substr(0, 10);
+		node.errorCode = -3; // bad input
+	}	
 	return node;
 }

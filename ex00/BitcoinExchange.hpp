@@ -21,12 +21,13 @@
 
 typedef struct s_btc
 {
+	int			errorCode;
 	std::string	date;
-	int			value;
+	float		value;
 } btc;
 
-bool is_validFile(char** fileName, std::list<btc>* pricesList);
-btc validateDate(std::string line, btc node);
-
+bool	is_validFile(char** fileName, std::list<btc>* pricesList);
+btc		validateDate(std::string line, btc node);
+float	valueAtDate(std::string inputLine);
 
 #endif

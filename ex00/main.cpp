@@ -22,8 +22,14 @@ int main(int argc, char *argv[])
 		{
 			for (std::list<btc>::iterator it = pricesList.begin(); it != pricesList.end(); it++)
 			{
-				std::cout << it->date << std::endl;
-				std::cout << it->value << std::endl;
+				if (it->errorCode == -1)
+					std::cout << "Error: number too large." << std::endl;
+				else if (it->errorCode == -2)
+					std::cout << "Error: not a posite number." << std::endl;
+				else if (it->errorCode == -3)
+					std::cout << "Error: bad input => " << it->date << std::endl;
+				else
+					std::cout << it->date << " => " << it->value << std::endl;
 			}
 		}
 	}
