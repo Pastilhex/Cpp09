@@ -37,6 +37,12 @@ float valueAtDate(std::string inputLine)
 					if (iss >> year >> separator >> month >> separator >> day >> separator >> val)
 						return val;
 				}
+				else
+				{
+					std::istringstream iss(lastLine);
+					if (iss >> year >> separator >> month >> separator >> day >> separator >> val)
+						return val;
+				}
 			}
 			else
 				lastLine = "2010-08-17";

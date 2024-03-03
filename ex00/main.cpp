@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 				if (it->errorCode == -1)
 					std::cout << "Error: number too large." << std::endl;
 				else if (it->errorCode == -2)
-					std::cout << "Error: not a posite number." << std::endl;
+					std::cout << "Error: not a positive number." << std::endl;
 				else if (it->errorCode == -3)
 					std::cout << "Error: bad input => " << it->date << std::endl;
 				else
