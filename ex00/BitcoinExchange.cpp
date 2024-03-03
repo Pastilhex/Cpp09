@@ -14,7 +14,7 @@
 
 float valueAtDate(std::string inputLine)
 {
-	std::ifstream inputFile("ex00/data.csv");
+	std::ifstream inputFile("data.csv");
 	if (inputFile.is_open())
 	{
 		std::string readedLine, lastLine, databaseLine;
@@ -48,6 +48,11 @@ float valueAtDate(std::string inputLine)
 				lastLine = "2010-08-17";
 		}
 	}
+	else
+	{
+		std::cerr << "Error opening file!" << std::endl; 
+		return false;
+	}
 	return 0;
 }
 
@@ -62,7 +67,6 @@ bool is_validFile(char** fileName, std::list<btc>* pricesList)
 			if (readedLine.compare("date | value"))
 			{
 				btc newNode;
-
 				newNode = validateDate(readedLine, newNode);
 				pricesList->push_back(newNode);
 			}
@@ -81,29 +85,43 @@ btc validateDate(std::string line, btc node)
 {
 	std::istringstream iss(line);
 	int year, month, day;
-	float val;
+	float val = -1.0f;
 	char separator;
 
 	node.errorCode = 0;
-	if (iss >> year >> separator >> month >> separator >> day >> separator >> val)
+	if (!line.empty())
 	{
-		if (!(year < 0 || month < 1 || month > 12 || day < 1 || day > 31))
+		if (iss >> year >> separator >> month >> separator >> day >> separator >> val)
 		{
-			node.date = line.substr(0, 10);
-			if (val > 1000)
-				node.errorCode = -1; // value to large
-			else if (val < 0)
-				node.errorCode = -2; // value negative
+			if (!(year < 0 || month < 1 || month > 12 || day < 1 || day > 31))
+			{
+				node.date = line.substr(0, 10);
+				if (val > 1000)
+					node.errorCode = -1; // value to large
+				else if (val < 0)
+					node.errorCode = -2; // value negative
+				else
+					node.value = val * valueAtDate(node.date);
+			}
 			else
 			{
-				node.value = val * valueAtDate(node.date);
+				node.date = line.substr(0, 10);
+				node.errorCode = -3; // bad input
 			}
+			if (separator != '|')
+				node.errorCode = -5; // wrong format
 		}
+		else if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31)
+		{
+			node.date = line.substr(0, 10);
+			node.errorCode = -3; // bad input
+		}
+		else if (separator != '|')
+				node.errorCode = -5; // wrong format
+		else if (val == -1)
+				node.errorCode = -4; // missing value
 	}
-	else if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31)
-	{
-		node.date = line.substr(0, 10);
-		node.errorCode = -3; // bad input
-	}	
+	else
+		node.errorCode = -6; // empty line
 	return node;
 }

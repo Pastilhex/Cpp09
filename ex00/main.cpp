@@ -28,6 +28,12 @@ int main(int argc, char *argv[])
 					std::cout << "Error: not a positive number." << std::endl;
 				else if (it->errorCode == -3)
 					std::cout << "Error: bad input => " << it->date << std::endl;
+				else if (it->errorCode == -4)
+					std::cout << "Error: missing value." << std::endl;
+				else if (it->errorCode == -5)
+					std::cout << "Error: wrong format." << std::endl;
+				else if (it->errorCode == -6)
+					std::cout << "Error: empty line." << std::endl;
 				else
 					std::cout << it->date << " => " << it->value << std::endl;
 			}
