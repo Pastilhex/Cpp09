@@ -6,7 +6,7 @@
 /*   By: ialves-m <ialves-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 18:35:06 by ialves-m          #+#    #+#             */
-/*   Updated: 2024/03/01 21:05:34 by ialves-m         ###   ########.fr       */
+/*   Updated: 2024/03/04 11:00:44 by ialves-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,31 +97,31 @@ btc validateDate(std::string line, btc node)
 			{
 				node.date = line.substr(0, 10);
 				if (val > 1000)
-					node.errorCode = -1; // value to large
+					node.errorCode = -1;
 				else if (val < 0)
-					node.errorCode = -2; // value negative
+					node.errorCode = -2;
 				else
 					node.value = val * valueAtDate(node.date);
 			}
 			else
 			{
 				node.date = line.substr(0, 10);
-				node.errorCode = -3; // bad input
+				node.errorCode = -3;
 			}
 			if (separator != '|')
-				node.errorCode = -5; // wrong format
+				node.errorCode = -5;
 		}
 		else if (year < 0 || month < 1 || month > 12 || day < 1 || day > 31)
 		{
 			node.date = line.substr(0, 10);
-			node.errorCode = -3; // bad input
+			node.errorCode = -3;
 		}
 		else if (separator != '|')
-				node.errorCode = -5; // wrong format
+				node.errorCode = -5;
 		else if (val == -1)
-				node.errorCode = -4; // missing value
+				node.errorCode = -4;
 	}
 	else
-		node.errorCode = -6; // empty line
+		node.errorCode = -6;
 	return node;
 }
