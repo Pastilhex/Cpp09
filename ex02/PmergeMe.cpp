@@ -41,7 +41,7 @@ const char* PmergeMe::exception::what() const throw()
 	return ("Error detected!");
 }
 
-std::vector<int> PmergeMe::readVectorFD()
+std::vector<int> PmergeMe::readVector()
 {
 	return this->_vectorFD;
 };
@@ -63,16 +63,28 @@ void	PmergeMe::createVector(char* argv[])
 	}
 }
 
-void	PmergeMe::createPairs(const std::vector<int> &vec)
+void	PmergeMe::createPairs()
 {
-	std::vector<std::pair<int,int> > vecPairs;
-	int size = vec.size() / 2;
+	int size = _vectorFD.size() / 2;
 	int i = 0;
 
 	while (size > 0)
 	{
-		vecPairs.push_back(std::make_pair(vec[i], vec[i+1]));
+		_vecPairs.push_back(std::make_pair(_vectorFD[i], _vectorFD[i+1]));
 		size--;
 		i += 2;
+	}
+}
+
+void	PmergeMe::sortHighPairs()
+{
+	for (std::vector<std::pair<int, int> >::iterator it = _vecPairs.begin(); it != _vecPairs.end(); it++)
+	{
+		if ((*it).first < (*it).second)
+		{
+			int tmp = (*it).first;
+			(*it).first = (*it).second;
+			(*it).second = tmp;
+		}
 	}
 }

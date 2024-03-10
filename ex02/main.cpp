@@ -21,14 +21,14 @@ int main(int argc, char *argv[])
 		try
 		{
 			vectorSort.createVector(argv);
-			vectorSort.createPairs(vectorSort.readVectorFD());
+			vectorSort.createPairs();
+			vectorSort.sortHighPairs();
 
 
 
 
 
-
-			std::vector<int> get = vectorSort.readVectorFD();
+			std::vector<int> get = vectorSort.readVector();
 			std::vector<int>::iterator it;
 			for (it = get.begin(); it != get.end(); it++)
 				std::cout << *it << std::endl;

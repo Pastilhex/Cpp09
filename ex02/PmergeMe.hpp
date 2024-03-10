@@ -22,6 +22,7 @@ class PmergeMe
 {
 private:
 	std::vector<int> _vectorFD;
+	std::vector<std::pair<int,int> > _vecPairs;
 	
 public:
 	PmergeMe();
@@ -29,9 +30,10 @@ public:
 	PmergeMe(const PmergeMe&);
 	PmergeMe& operator=(const PmergeMe&);
 	
-	std::vector<int> readVectorFD();
+	std::vector<int> readVector();
 	void	createVector(char *argv[]);
-	void	createPairs(const std::vector<int> &vec);
+	void	createPairs();
+	void	sortHighPairs();
 
 	class exception : public std::exception
 	{
