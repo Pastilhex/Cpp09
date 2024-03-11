@@ -6,7 +6,7 @@
 /*   By: ialves-m <ialves-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:52:39 by ialves-m          #+#    #+#             */
-/*   Updated: 2024/03/08 17:35:38 by ialves-m         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:55:03 by ialves-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@
 class PmergeMe
 {
 private:
-	std::vector<int> _vectorFD;
+	std::vector<int> _vectorUnsorted;
 	std::vector<std::pair<int,int> > _vecPairs;
+	std::vector<int> _vectorMain;
+	std::vector<int> _vectorUnsorted;
 	
 public:
 	PmergeMe();
@@ -31,12 +33,13 @@ public:
 	PmergeMe& operator=(const PmergeMe&);
 	
 	std::vector<int> readVector();
-	std::vector<std::pair<int, int> > readPairs();
+	std::vector<std::pair<int, int> >* readPairs();
 	void	createVector(char *argv[]);
 	void	createPairs();
 	void	sortHighPairs();
-	void	mergeSort(std::vector<std::pair<int, int> >&array);
 	void	merge(std::vector<std::pair<int, int> >& array, std::vector<std::pair<int, int> > &leftArray, std::vector<std::pair<int, int> > &rightArray);
+	void	mergeSort(std::vector<std::pair<int, int> >&array);
+	void	insertionSort();
 
 	class exception : public std::exception
 	{

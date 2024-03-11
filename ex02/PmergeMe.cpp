@@ -6,7 +6,7 @@
 /*   By: ialves-m <ialves-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:52:27 by ialves-m          #+#    #+#             */
-/*   Updated: 2024/03/08 19:06:01 by ialves-m         ###   ########.fr       */
+/*   Updated: 2024/03/11 18:54:02 by ialves-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ const char* PmergeMe::exception::what() const throw()
 
 std::vector<int> PmergeMe::readVector()
 {
-	return this->_vectorFD;
+	return this->_vectorUnsorted;
 };
 
 void	PmergeMe::createVector(char* argv[])
@@ -58,24 +58,24 @@ void	PmergeMe::createVector(char* argv[])
 		value = std::strtol(argv[i], &ptr, 10);
 		if (*ptr != '\0' || value < 0)
 			throw (PmergeMe::exception());
-		this->_vectorFD.push_back(value);
+		this->_vectorUnsorted.push_back(value);
 		i++;
 	}
 }
 
-std::vector<std::pair<int, int> > PmergeMe::readPairs()
+std::vector<std::pair<int, int> >* PmergeMe::readPairs()
 {
-	return this->_vecPairs;
+	return &this->_vecPairs;
 }
 
 void	PmergeMe::createPairs()
 {
-	int size = _vectorFD.size() / 2;
+	int size = _vectorUnsorted.size() / 2;
 	int i = 0;
 
 	while (size > 0)
 	{
-		_vecPairs.push_back(std::make_pair(_vectorFD[i], _vectorFD[i+1]));
+		_vecPairs.push_back(std::make_pair(_vectorUnsorted[i], _vectorUnsorted[i+1]));
 		size--;
 		i += 2;
 	}
@@ -121,14 +121,19 @@ void	PmergeMe::mergeSort(std::vector<std::pair<int, int> >&array)
 	merge(array, leftArray, rightArray);
 }
 
-void	merge(std::vector<std::pair<int, int> >& array, std::vector<std::pair<int, int> > &leftArray, std::vector<std::pair<int, int> > &rightArray)
+void	PmergeMe::insertionSort()
+{
+	
+}
+
+void	PmergeMe::merge(std::vector<std::pair<int, int> >& array, std::vector<std::pair<int, int> > &leftArray, std::vector<std::pair<int, int> > &rightArray)
 {
 	int leftSize = array.size() / 2;
 	int rightSize = array.size() - leftSize;
 	int i = 0, l = 0, r = 0;
 	
 	while(l < leftSize && r < rightSize) {
-		if(leftArray[l] < rightArray[r]) {
+		if(leftArray[l].first < rightArray[r].first) {
 			array[i] = leftArray[l];
 			i++;
 			l++;
