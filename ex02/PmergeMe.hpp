@@ -31,9 +31,12 @@ public:
 	PmergeMe& operator=(const PmergeMe&);
 	
 	std::vector<int> readVector();
+	std::vector<std::pair<int, int> > readPairs();
 	void	createVector(char *argv[]);
 	void	createPairs();
 	void	sortHighPairs();
+	void	mergeSort(std::vector<std::pair<int, int> >&array);
+	void	merge(std::vector<std::pair<int, int> >& array, std::vector<std::pair<int, int> > &leftArray, std::vector<std::pair<int, int> > &rightArray);
 
 	class exception : public std::exception
 	{

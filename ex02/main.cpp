@@ -23,7 +23,8 @@ int main(int argc, char *argv[])
 			vectorSort.createVector(argv);
 			vectorSort.createPairs();
 			vectorSort.sortHighPairs();
-
+			
+			vectorSort.mergeSort();
 
 
 
