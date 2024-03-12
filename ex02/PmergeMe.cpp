@@ -65,7 +65,7 @@ void	PmergeMe::createVector(char* argv[])
 
 std::vector<std::pair<int, int> >* PmergeMe::readPairs()
 {
-	return &this->_vecPairs;
+	return &this->_vectorPairs;
 }
 
 void	PmergeMe::createPairs()
@@ -75,15 +75,15 @@ void	PmergeMe::createPairs()
 
 	while (size > 0)
 	{
-		_vecPairs.push_back(std::make_pair(_vectorUnsorted[i], _vectorUnsorted[i+1]));
+		_vectorPairs.push_back(std::make_pair(_vectorUnsorted[i], _vectorUnsorted[i+1]));
 		size--;
 		i += 2;
 	}
 }
 
-void	PmergeMe::sortHighPairs()
+void	PmergeMe::sortPairs()
 {
-	for (std::vector<std::pair<int, int> >::iterator it = _vecPairs.begin(); it != _vecPairs.end(); it++)
+	for (std::vector<std::pair<int, int> >::iterator it = _vectorPairs.begin(); it != _vectorPairs.end(); it++)
 	{
 		if ((*it).first < (*it).second)
 		{
@@ -121,9 +121,39 @@ void	PmergeMe::mergeSort(std::vector<std::pair<int, int> >&array)
 	merge(array, leftArray, rightArray);
 }
 
-void	PmergeMe::insertionSort()
+int PmergeMe::binarySearch(std::vector<int> array, int item, int low, int high)
+{
+	while (low <= high) 
+	{
+		int mid = low + (high - low) / 2;
+
+		if (item == array[mid])
+			return mid + 1;
+		else if (item > array[mid])
+			low = mid + 1;
+		else
+			high = mid - 1;
+	}
+
+	return low;
+}
+
+void	PmergeMe::binaryInsertion(std::vector<int> array, int pos)
 {
 	
+}
+
+void	PmergeMe::insertionSort()
+{
+	_vectorMainChain.push_back(_vectorPairs[0].second);
+
+	int j = 1, pos = 0;
+
+	for (std::vector<int>::iterator it = _vectorMainChain.begin(); it < _vectorMainChain.end(); it++)
+	{
+		pos = binarySearch(_vectorMainChain, _vectorPairs[j].second, *it, _vectorMainChain.size() - 1);
+		std::cout << pos;
+	}
 }
 
 void	PmergeMe::merge(std::vector<std::pair<int, int> >& array, std::vector<std::pair<int, int> > &leftArray, std::vector<std::pair<int, int> > &rightArray)
