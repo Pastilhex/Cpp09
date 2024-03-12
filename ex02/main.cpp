@@ -6,7 +6,7 @@
 /*   By: ialves-m <ialves-m@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 11:52:14 by ialves-m          #+#    #+#             */
-/*   Updated: 2024/03/11 18:53:55 by ialves-m         ###   ########.fr       */
+/*   Updated: 2024/03/12 19:11:02 by ialves-m         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int main(int argc, char *argv[])
 			vectorSort.insertionSort();
 
 
-			// std::vector<int> get = vectorSort.readVector();
-			// std::vector<int>::iterator it;
-			// for (it = get.begin(); it != get.end(); it++)
-			// 	std::cout << *it << std::endl;
+			std::vector<int> get = vectorSort.readVectorMainChain();
+			std::vector<int>::iterator it;
+			for (it = get.begin(); it != get.end(); it++)
+				std::cout << *it << std::endl;
 		}
 		catch(const std::exception& e)
 		{
