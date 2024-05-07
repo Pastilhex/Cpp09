@@ -72,3 +72,23 @@ bool validDigit(char* args)
 	}
 	return true;
 }
+
+bool validArgs(char* args)
+{
+	int argsSize = strlen(args);
+	int nbr = 0;
+	int ops = 0;
+	
+	if (argsSize % 2 == 0)
+		return false;
+	
+	for (int i = 0; i < argsSize; i++)
+	{
+		if (args[i] >= '0' && args[i] <= '9')
+			nbr++;
+		if (args[i] == '+' || args[i] == '-' || args[i] == '*' || args[i] == '/')
+			ops++;
+	}
+
+	return (nbr == ops + 1);
+}

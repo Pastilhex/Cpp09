@@ -19,5 +19,6 @@
 
 void RPN(char* args);
 bool validDigit(char* args);
+bool validArgs(char* args);
 
 #endif
